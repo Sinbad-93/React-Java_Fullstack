@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+import UserOrders from "../users/UserOrders"
 
 export default function Home() {
   const [users, setUsers] = useState([]);
+
+  const [showOrder, setShowOrder] = useState(false);
 
   const { id } = useParams();
 
@@ -21,6 +24,46 @@ export default function Home() {
     loadUsers();
   }
 
+  async function createOrder(id){
+    try {
+      //génération aléatoire
+      var productArray = ['Car', 'Motorbike', 'Bike', 'Boat', 'Plane','Skate'];
+      var rand = Math.floor(Math.random()*productArray.length);
+      const product = productArray[rand];
+      var date = new Date();
+      var month = date.getMonth()+1;
+      if(month.toString().length <2){
+        month = "0"+month.toString();
+      }
+      var day = date.getDay();
+      if(day.toString().length <2){
+        day = "0"+day.toString();
+      }
+      date = date.getFullYear() + "-" + month + "-" + day;
+      console.log(date)
+
+      const order = {
+        "userId" : id,
+        "price" : Math.floor(Math.random()*1000),
+        "product" : product,
+        "date" : date
+      }
+       //await axios.post("http://localhost:8080/user", user);
+       //fonctionne tout aussi bien avec fetch 
+       
+      const response = await fetch('http://localhost:8080/order', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(order)
+  });
+  const data = await response.json();
+  console.log(data);
+  
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   /* PAREIL AVEC CONST
   const deleteUser = async (id) => {
     await axios.delete(`http://localhost:8080/user/${id}`);
@@ -30,26 +73,30 @@ export default function Home() {
   return (
     <div className="container">
       <div className="py-4">
-        <table className="table border shadow">
-          <thead>
-            <tr>
-              <th scope="col">S.N</th>
-              <th scope="col">Name</th>
-              <th scope="col">Username</th>
-              <th scope="col">Email</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
+        <div className="grid">
+         
+          
+              <span > S.N</span>
+              <span >Name</span>
+              <span>Username</span>
+              <span >Email</span>
+              <span >Action  {showOrder && <button onClick={() => setShowOrder(false)}>Hide orders &#8593;</button>}
+                {!showOrder && <button onClick={() => setShowOrder(true)}>Show orders &#8595;</button>}</span>
+            </div>
+
+          <div>
             {users.map((user, index) => (
-              <tr>
-                <th scope="row" key={index}>
+              <>
+            <div className="grid box">
+            
+                <span key={index}>
+               
                   {index + 1}
-                </th>
-                <td>{user.name}</td>
-                <td>{user.username}</td>
-                <td>{user.email}</td>
-                <td>
+                </span>
+                <span>{user.name}</span>
+                <span>{user.username}</span>
+                <span>{user.email}</span>
+                <span>
                   <Link
                     className="btn btn-primary mx-2"
                     to={`/viewuser/${user.id}`}
@@ -68,11 +115,24 @@ export default function Home() {
                   >
                     Delete
                   </button>
-                </td>
-              </tr>
+
+                  <button
+                  onClick={() =>createOrder(user.id)}
+                    className="btn btn-danger mx-2"
+                  >
+                    Add Order
+                  </button>
+                </span>
+                
+               
+                
+              </div>
+             {showOrder && <UserOrders userid={user.id} userName={user.name}></UserOrders>}
+              </>
+           
+              
             ))}
-          </tbody>
-        </table>
+          </div>
       </div>
     </div>
   );

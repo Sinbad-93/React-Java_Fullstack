@@ -1,0 +1,20 @@
+.flex {
+display: flex;
+flex-wrap: wrap;
+}
+
+.flex2 {
+    display: flex;
+    flex-wrap: nowrap;
+    border: 1px solid green;
+    margin: 20px;
+}
+
+.indication {
+    font-weight: bold;
+}
+
+.wrapper {
+    margin: 0 5px;
+    
+}
