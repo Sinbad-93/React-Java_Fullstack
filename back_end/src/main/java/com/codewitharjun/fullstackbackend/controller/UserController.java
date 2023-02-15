@@ -18,11 +18,13 @@ public class UserController {
 
     @PostMapping("/user")
     User newUser(@RequestBody User newUser) {
+    	System.out.println(newUser.toString());
         return userRepository.save(newUser);
     }
 
     @GetMapping("/users")
     List<User> getAllUsers() {
+    	System.out.println("getAllUsers");
         return userRepository.findAll();
     }
 

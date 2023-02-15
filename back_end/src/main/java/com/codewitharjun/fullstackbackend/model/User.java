@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-/* Created by Arjun Gautam */
+
 @Entity
 public class User {
 
@@ -46,4 +46,10 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+    
+
+    public String toString() {
+	      return name+'-'+username+'-'+email;
+	    }
+    
 }
