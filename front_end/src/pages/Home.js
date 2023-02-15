@@ -8,6 +8,8 @@ export default function Home() {
 
   const [showOrder, setShowOrder] = useState(false);
 
+  const [refresh, setRefresh] = useState(false);
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -58,6 +60,7 @@ export default function Home() {
   });
   const data = await response.json();
   console.log(data);
+  setRefresh(!refresh);
   
     } catch (error) {
       console.error(error);
@@ -118,7 +121,7 @@ export default function Home() {
 
                   <button
                   onClick={() =>createOrder(user.id)}
-                    className="btn btn-danger mx-2"
+                    className="btn btn-success mx-2"
                   >
                     Add Order
                   </button>
@@ -127,7 +130,7 @@ export default function Home() {
                
                 
               </div>
-             {showOrder && <UserOrders userid={user.id} userName={user.name}></UserOrders>}
+             {showOrder && <UserOrders refresh={refresh} userid={user.id} userName={user.name}></UserOrders>}
               </>
            
               

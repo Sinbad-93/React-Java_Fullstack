@@ -4,16 +4,20 @@ import { Link, useParams } from "react-router-dom";
 import style from "./userOrders.module.css"
 
 export default function UserOrders(props) {
-  const [orders, setOrder] = useState([]);
 
-  const { id } = useParams();
+useEffect( () => {
+  loadOrder();
+}, [props.refresh]); 
+
+  const [orders, setOrder] = useState([]);
 
   useEffect(() => {
     loadOrder();
   }, []);
 
   const loadOrder = async () => {
-    const result = await axios.get(`http://localhost:8080/orders/${props.userid}`);
+    const result = await axios.get(`http://localhost:8080/orders-with-email/${props.userid}`);
+    console.log(result.data)
     setOrder(result.data);
   };
 
@@ -31,7 +35,7 @@ export default function UserOrders(props) {
 
                     <span className={style.wrapper}>
                   <span className={style.indication}>Name: </span>
-                  <span> {props.userName} </span></span>
+                  <span> {props.userName}  {order.userId.email}  </span></span>
                   <span className={style.wrapper}>
                   <span className={style.indication}>Product: </span>
                   <span> {order.product} </span></span>

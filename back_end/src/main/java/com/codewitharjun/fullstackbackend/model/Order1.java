@@ -5,6 +5,11 @@ import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 public class Order1 {
@@ -12,7 +17,12 @@ public class Order1 {
     @Id
     @GeneratedValue
     private Long id;
-    private Long userId;
+    
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "id")
+    @OnDelete(action=OnDeleteAction.CASCADE)
+    private User userId;
+    
     private Long price;
     private String product;
     private LocalDate date;
@@ -24,12 +34,12 @@ public class Order1 {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    public Long getUserId() {
+
+	public User getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(User userId) {
 		this.userId = userId;
 	}
 

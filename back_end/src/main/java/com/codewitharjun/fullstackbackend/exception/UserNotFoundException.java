@@ -1,5 +1,6 @@
 package com.codewitharjun.fullstackbackend.exception;
-/* Created by Arjun Gautam */
+
+import com.codewitharjun.fullstackbackend.model.User;
 
 public class UserNotFoundException extends RuntimeException{
     public UserNotFoundException(Long id){
