@@ -26,7 +26,7 @@ export default function AddUser() {
  
   async function createUser(){
     try {
-      
+      console.log(user);
        //await axios.post("http://localhost:8080/user", user);
        //fonctionne tout aussi bien avec fetch 
        

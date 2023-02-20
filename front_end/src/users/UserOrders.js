@@ -16,7 +16,7 @@ useEffect( () => {
   }, []);
 
   const loadOrder = async () => {
-    const result = await axios.get(`http://localhost:8080/orders-with-email/${props.userid}`);
+    const result = await axios.get(`http://localhost:8080/orders/${props.userid}`);
     console.log(result.data)
     setOrder(result.data);
   };
@@ -35,7 +35,7 @@ useEffect( () => {
 
                     <span className={style.wrapper}>
                   <span className={style.indication}>Name: </span>
-                  <span> {props.userName}  {order.userId.email}  </span></span>
+                  <span> {props.userName}  {/*{order.userId.email} */} </span></span>
                   <span className={style.wrapper}>
                   <span className={style.indication}>Product: </span>
                   <span> {order.product} </span></span>
