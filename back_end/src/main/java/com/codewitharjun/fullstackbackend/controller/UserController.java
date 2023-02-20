@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/* Created by Arjun Gautam */
 @RestController
 @CrossOrigin("http://localhost:3000")
 public class UserController {
@@ -18,13 +17,11 @@ public class UserController {
 
     @PostMapping("/user")
     User newUser(@RequestBody User newUser) {
-    	System.out.println(newUser.toString());
         return userRepository.save(newUser);
     }
 
     @GetMapping("/users")
     List<User> getAllUsers() {
-    	System.out.println("getAllUsers");
         return userRepository.findAll();
     }
 

@@ -2,6 +2,7 @@ package com.codewitharjun.fullstackbackend.model;
 
 import java.time.LocalDate;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,6 +12,9 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+
 @Entity
 public class Order1 {
 
@@ -18,10 +22,11 @@ public class Order1 {
     @GeneratedValue
     private Long id;
     
-    @ManyToOne
+   /* @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")
     @OnDelete(action=OnDeleteAction.CASCADE)
-    private User userId;
+    @JsonDeserialize(using = UserConverter.class)*/
+    private Long userId;
     
     private Long price;
     private String product;
@@ -35,11 +40,11 @@ public class Order1 {
         this.id = id;
     }
 
-	public User getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(User userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 

@@ -4,8 +4,8 @@ import com.codewitharjun.fullstackbackend.model.User;
 
 public class OrderNotFoundException extends RuntimeException{
 	
-	    public OrderNotFoundException(User userId) {
-	    	super("Could not found the user with id "+ userId);
+	    public OrderNotFoundException(Long id) {
+	    	super("Could not found the user with id "+ id);
 	    }
 	}
 
