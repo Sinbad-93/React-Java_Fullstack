@@ -2,15 +2,15 @@ package com.codewitharjun.fullstackbackend.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 
 @Entity
 public class User {
-
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String username;
     private String name;
     private String email;
@@ -46,10 +46,8 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-    
 
     public String toString() {
-	      return name+'-'+username+'-'+email;
-	    }
-    
+        return name + '-' + username + '-' + email;
+    }
 }
