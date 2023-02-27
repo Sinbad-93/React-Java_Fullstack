@@ -18,11 +18,9 @@ import java.util.Map;
 @RestController
 @CrossOrigin("http://localhost:3000")
 public class OrderController {
-
-	@Autowired
+    @Autowired
     private OrderRepository orderRepository;
 
-    
     /*@Autowired
     public OrderController(OrderRepository orderRepository, UserRepository userRepository) {
         this.orderRepository = orderRepository;
@@ -32,24 +30,22 @@ public class OrderController {
     	System.out.println(newOrder.toString());
         return orderRepository.save(newOrder);
     }*/
-    
-    @PostMapping("/order")
+
+    @PostMapping("/order") // create order with id = null
     public Order1 newOrder(@RequestBody Order1 order) {
         // 4 lignes servent essentiellement à vérifier si l'utilisateur existe sinon renvoie une exception
-    	//On doit convertir l'userId de type User en Long. 
+        //On doit convertir l'userId de type User en Long.
     	/*Long userId = order.getUserId().getId();
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
         order.setUserId(user);*/
-        
+
         return orderRepository.save(order);
     }
-    
-   
 
     @GetMapping("/orders")
     List<Order1> getAllOrders() {
-    	System.out.println("getAllOrders");
+        System.out.println("getAllOrders");
         return orderRepository.findAll();
     }
 
@@ -58,15 +54,15 @@ public class OrderController {
         return orderRepository.findFirstByUserId(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
     }
-    
+
     @GetMapping("/orders/{userId}")
     List<Order1> getOrdersById(@PathVariable Long userId) {
         return orderRepository.findByUserId(userId)
                 .orElseThrow(() -> new UserNotFoundException(userId));
     }
-    
-    /* Lorsque tu envoies l'ID d'un utilisateur depuis le front-end, 
-     * Spring va automatiquement convertir cette valeur en un objet User correspondant à cet ID. 
+
+    /* Lorsque tu envoies l'ID d'un utilisateur depuis le front-end,
+     * Spring va automatiquement convertir cette valeur en un objet User correspondant à cet ID.
      * C'est ce qui se passe grâce à l'annotation @PathVariable dans le contrôleur.*/
    /*@GetMapping("/orders-with-email/{userId}")
     List<Order1> getAllOrdersWithEmail(@PathVariable User userId) {
@@ -81,27 +77,21 @@ public class OrderController {
         return orderRepository.findAllWithUserEmail(userId)
         		.orElseThrow(() -> new UserNotFoundException(userId));
     }*/
-    
 
-    @PutMapping("/order/{id}")
-    Order1 updateOrder(@RequestBody Order1 newOrder, @PathVariable Long id) {
-        return orderRepository.findById(id)
-                .map(order -> {
-                	order.setUserId(newOrder.getUserId());
-                	order.setPrice(newOrder.getPrice());
-                    return orderRepository.save(order);
-                }).orElseThrow(() -> new OrderNotFoundException(id));
+    @PutMapping("/order") // update order with id in order object
+    Order1 updateOrder(@RequestBody Order1 order) {
+        if (!orderRepository.existsById(order.getId())) {
+            throw new OrderNotFoundException(order.getId());
+        }
+        return orderRepository.save(order);
     }
 
     @DeleteMapping("/order/{id}")
-    String deleteOrder(@PathVariable Long id){
-        if(!orderRepository.existsById(id)){
+    String deleteOrder(@PathVariable Long id) {
+        if (!orderRepository.existsById(id)) {
             throw new OrderNotFoundException(id);
         }
         orderRepository.deleteById(id);
-        return  "User with id "+id+" has been deleted success.";
+        return "User with id " + id + " has been deleted success.";
     }
-
-
-
 }

@@ -11,7 +11,6 @@ import java.util.List;
 @RestController
 @CrossOrigin("http://localhost:3000")
 public class UserController {
-
     @Autowired
     private UserRepository userRepository;
 
@@ -50,7 +49,4 @@ public class UserController {
         userRepository.deleteById(id);
         return  "User with id "+id+" has been deleted success.";
     }
-
-
-
 }

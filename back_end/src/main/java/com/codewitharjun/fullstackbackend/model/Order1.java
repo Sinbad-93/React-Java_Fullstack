@@ -1,33 +1,25 @@
 package com.codewitharjun.fullstackbackend.model;
 
-import java.time.LocalDate;
-
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
+import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 public class Order1 {
-
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-   /* @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id")
-    @OnDelete(action=OnDeleteAction.CASCADE)
-    @JsonDeserialize(using = UserConverter.class)*/
-    private Long userId;
-    
+
+    /* @ManyToOne
+     @JoinColumn(name = "userId", referencedColumnName = "id")
+     @OnDelete(action=OnDeleteAction.CASCADE)
+     @JsonDeserialize(using = UserConverter.class)*/
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private User user;
+
     private Long price;
     private String product;
     private LocalDate date;
@@ -40,45 +32,40 @@ public class Order1 {
         this.id = id;
     }
 
-	public Long getUserId() {
-		return userId;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public Long getPrice() {
-		return price;
-	}
+    public Long getPrice() {
+        return price;
+    }
 
-	public void setPrice(Long price) {
-		this.price = price;
-	}
+    public void setPrice(Long price) {
+        this.price = price;
+    }
 
-	public String getProduct() {
-		return product;
-	}
+    public String getProduct() {
+        return product;
+    }
 
-	public void setProduct(String product) {
-		this.product = product;
-	}
+    public void setProduct(String product) {
+        this.product = product;
+    }
 
-	public LocalDate getDate() {
-		return date;
-	}
+    public LocalDate getDate() {
+        return date;
+    }
 
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 
-	
-
-    
-    
     /*
     public String toString() {
 	      return name+'-'+username+'-'+email;
 	    }*/
-    
 }
