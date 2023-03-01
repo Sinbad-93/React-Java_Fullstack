@@ -1,15 +1,18 @@
 package com.codewitharjun.fullstackbackend.repository;
 
 import com.codewitharjun.fullstackbackend.model.Order1;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order1, Long> {
-    Optional<Order1> findFirstByUserId(Long userId);
+	
+    Optional<List<Order1>> findFirst10ByUserId(Long userId);
 
     Optional<List<Order1>> findByUserId(Long userId);
+   
 
 	/*@Query("SELECT o FROM Order1 o JOIN FETCH o.userId u WHERE u = :user")
 	Optional<List<Order1>> findAllWithUserEmail(@Param("user") User user);*/

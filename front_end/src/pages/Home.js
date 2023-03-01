@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import UserOrders from "../users/UserOrders"
 
 export default function Home() {
+  console.log('rendering')
   const [users, setUsers] = useState([]);
 
   const [showOrder, setShowOrder] = useState(false);
@@ -45,7 +46,7 @@ export default function Home() {
       console.log(date)
 
       const order = {
-        "userId" : id,
+        "user" : {"id" : id},
         "price" : Math.floor(Math.random()*1000),
         "product" : product,
         "date" : date
